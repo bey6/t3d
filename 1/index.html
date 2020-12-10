@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>旋转的蓝立方体</title>
+    <style>
+      body {
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="../three.js"></script>
+    <script>
+      // 创建一个场景
+      const scene = new THREE.Scene(),
+        // perspective camera: 透视相机
+        camera = new THREE.PerspectiveCamera(
+          75, // FOV(Field of View): 视场角
+          window.innerWidth / window.innerHeight, // Aspect Ratio: 长宽比
+          0.1, // near: 近截面
+          1000 // far: 远截面
+        ),
+        // webgl 渲染器, 也有其他的降级渲染器
+        renderer = new THREE.WebGLRenderer()
+      renderer.setSize(
+        window.innerWidth,
+        window.innerHeight /** , 第三个参数是 update style: 是否保持应用尺寸 */
+      )
+      document.body.appendChild(renderer.domElement)
+
+      // 添加几何体
+      // box geometry[dgi'ametri]: 立方体
+      const geometry = new THREE.BoxGeometry(),
+        // mesh basic material: 网格基础材质
+        material = new THREE.MeshBasicMaterial({ color: 0x6699cc }),
+        // mesh: 网格
+        cube = new THREE.Mesh(geometry, material)
+      scene.add(cube)
+
+      camera.position.z = 5
+
+      function animate() {
+        requestAnimationFrame(animate)
+
+        cube.rotation.x += 0.02
+        cube.rotation.y += 0.02
+
+        renderer.render(scene, camera)
+      }
+      animate()
+    </script>
+  </body>
+</html>
